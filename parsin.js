@@ -26,7 +26,7 @@ function Parser(options) {
 }
 
 Parser.prototype.parse = function (expr) {
-  const instr = [];
+  const tokens = [];
   const parserState = new parserState(
     this,
     new TokenStream(this, expr),
