@@ -1,4 +1,4 @@
-const isOperator = function isOperator(c) { return /[+\-*\/\^%=(),]/.test(c); };
+const isOperator = function isOperator(c) { return /[+\-*^%=(),]/.test(c); };
 const isDigit = function isDigit(c) { return /[0-9]/.test(c); };
 const isWhiteSpace = function isWhiteSpace(c) { return /\s/.test(c); };
 const isIdentifier = function isIdentifier(c) { return typeof c === 'string' && !isOperator(c) && !isDigit(c) && !isWhiteSpace(c); };
@@ -11,6 +11,7 @@ const tokenize = function (expr) {
   const advance = function () {
     i += 1;
     c = expr[i];
+    return c;
   };
 
   const addToken = function (type, value) {
@@ -23,8 +24,9 @@ const tokenize = function (expr) {
   while (i < expr.length) {
     c = expr[i];
 
-    if (isWhiteSpace(c)) advance();
-    else if (isOperator('operator', c)) {
+    if (isWhiteSpace(c)) {
+      advance();
+    } else if (isOperator(c)) {
       addToken('operator', c);
       advance();
     } else if (isDigit(c)) {
@@ -40,8 +42,12 @@ const tokenize = function (expr) {
       let idn = c;
       while (isIdentifier(advance())) idn += c;
       addToken('identifier', idn);
+    } else {
+      throw new Error('Unrecognized token.');
     }
   }
+  addToken('end');
+  return tokens;
 };
 
 module.exports = tokenize;
