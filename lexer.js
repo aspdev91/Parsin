@@ -3,7 +3,7 @@ const isDigit = function isDigit(c) { return /[0-9]/.test(c); };
 const isWhiteSpace = function isWhiteSpace(c) { return /\s/.test(c); };
 const isIdentifier = function isIdentifier(c) { return typeof c === 'string' && !isOperator(c) && !isDigit(c) && !isWhiteSpace(c); };
 
-const tokenize = function (expr) {
+const lex = function (expr) {
   const tokens = [];
   let c;
   let i = 0;
@@ -50,4 +50,4 @@ const tokenize = function (expr) {
   return tokens;
 };
 
-module.exports = tokenize;
+module.exports = lex;
